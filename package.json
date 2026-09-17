@@ -21,7 +21,7 @@
     "url": "https://github.com/Abouhtak/Filtra-UI/issues"
   },
   "homepage": "https://github.com/Abouhtak/Filtra-UI#readme",
-  "description": "Filtra — a considered water filtration storefront concept",
+  "description": "Filtra Maroc — French storefront design and PrestaShop theme reference",
   "dependencies": {
     "lucide-react": "^1.46.0",
     "react": "^19.3.0",
