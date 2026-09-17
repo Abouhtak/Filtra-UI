@@ -9,15 +9,15 @@ test("French catalog, categories, sorting, search, and image assets", async ({
   await page.emulateMedia({ reducedMotion: "reduce" });
   await expect(
     page.getByRole("heading", {
-      name: "Une eau meilleure. Une vie plus simple.",
+      name: "Changez l’eau. Changez votre quotidien.",
     }),
   ).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("lang", "fr");
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator(".real-hero img")).toBeVisible();
+  await expect(page.locator(".hero-machine")).toBeVisible();
   expect(
     await page
-      .locator(".real-hero img")
+      .locator(".hero-machine")
       .evaluate((img) => img.complete && img.naturalWidth > 0),
   ).toBeTruthy();
   expect(
@@ -30,7 +30,17 @@ test("French catalog, categories, sorting, search, and image assets", async ({
     fullPage: true,
   });
   await page
-    .getByRole("link", { name: "Trouver mon filtre", exact: true })
+    .getByRole("button", { name: "Les cartouches", exact: true })
+    .click();
+  await expect(page.locator(".product-card")).toHaveCount(3);
+  await page
+    .getByRole("button", { name: "Les fontaines", exact: true })
+    .click();
+  await expect(page.locator(".product-card")).toHaveCount(1);
+  await page.getByRole("button", { name: "Les filtres", exact: true }).click();
+  await expect(page.locator(".product-card")).toHaveCount(4);
+  await page
+    .getByRole("link", { name: "Découvrir les filtres", exact: true })
     .click();
   await expect(page.locator(".product-card")).toHaveCount(4);
   await page.getByLabel("Trier les produits").selectOption("low");
@@ -67,7 +77,7 @@ test("guide matches cartridges to filter families and dialogs keep focus", async
   page,
 }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Aidez-moi à choisir" }).click();
+  await page.getByRole("button", { name: "Quel filtre pour moi ?" }).click();
   await page.keyboard.press("Shift+Tab");
   await expect(
     page.getByRole("button", { name: /Emporter mon eau/ }),
@@ -225,7 +235,7 @@ test("mobile menu, FAQ and malformed saved cart recover cleanly", async ({
     .getByText("La livraison est-elle vraiment offerte ?", { exact: true })
     .click();
   await expect(
-    page.getByText("Oui. La politique de Filtra Maroc prévoit", {
+    page.getByText("Oui. Filtra Maroc prévoit", {
       exact: false,
     }),
   ).toBeVisible();

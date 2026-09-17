@@ -1,6 +1,6 @@
 # Filtra Maroc
 
-Refonte frontend de [filtra.ma/fr](https://filtra.ma/fr/) : une base visuelle et interactive pour un futur thème PrestaShop. React + Vite, contenu français, prix en dirhams, photos du catalogue réel et une identité océan / sauge.
+Refonte frontend de [filtra.ma/fr](https://filtra.ma/fr/) : une base visuelle et interactive pour un futur thème PrestaShop. Une nouvelle direction bleu cobalt, blanc et citron vert, une typographie affirmée et une navigation centrée sur les besoins. React + Vite, contenu français, prix en dirhams, logo et photos du catalogue réel.
 
 ## Démarrer
 
@@ -37,7 +37,7 @@ Tests desktop et mobile : catalogue, recherche, tri, guide de cartouches, focus,
 
 ## Utiliser ce travail dans PrestaShop
 
-Lire [le guide de portage](docs/PRESTASHOP.md) : correspondances entre composants et templates, hooks, données produit, checkout natif, langue et tests de préproduction. Les données sont séparées dans `src/catalog.js` ; les styles spécifiques dans `src/maroc.css`. [Sources des photos](docs/ASSETS.md).
+Lire [le guide de portage](docs/PRESTASHOP.md) : correspondances entre composants et templates, hooks, données produit, checkout natif, langue et tests de préproduction. Les données sont séparées dans `src/catalog.js`, l’accueil et le pied de page dans `src/Home.jsx`, et le système visuel complet dans `src/design.css`. [Sources des photos](docs/ASSETS.md).
 
 **Ce dépôt n’est pas encore un thème PrestaShop installable.** Il ne modifie pas filtra.ma. Aucune commande, inscription ou donnée personnelle n’est envoyée. Seul le panier est enregistré dans le navigateur ; les coordonnées restent en mémoire jusqu’à la fermeture ou au rechargement. Les prix et politiques sont un instantané du site public observé le 16 septembre 2026 ; la version finale devra utiliser les données du serveur.
 

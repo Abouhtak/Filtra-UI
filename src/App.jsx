@@ -34,8 +34,8 @@ import {
   storeUrl,
   deliveryText,
 } from "./catalog";
-import "./styles.css";
-import "./maroc.css";
+import Home, { Footer } from "./Home";
+import "./design.css";
 
 const CART_KEY = "filtra-maroc-cart-v1";
 function readCart() {
@@ -67,10 +67,7 @@ function Photo({ product, name, className = "", ...props }) {
 function Logo() {
   return (
     <a className="brand" href="#/" aria-label="Filtra Maroc — accueil">
-      <Droplets aria-hidden="true" />
-      <span>
-        filtra<small>MAROC</small>
-      </span>
+      <img src={asset("logo")} alt="Filtra Maroc" />
     </a>
   );
 }
@@ -285,7 +282,7 @@ function App() {
   const shop = route.startsWith("#/shop");
   const cat = route.split("/")[2] || "all";
   useEffect(() => {
-    document.title = `${isCheckout ? "Votre commande" : p ? p.name : shop ? "La boutique" : "Une eau meilleure, tout simplement"} | Filtra Maroc`;
+    document.title = `${isCheckout ? "Votre commande" : p ? p.name : shop ? "La boutique" : "Changez l’eau. Changez votre quotidien."} | Filtra Maroc`;
   }, [route, p, isCheckout, shop]);
   return (
     <>
@@ -314,6 +311,7 @@ function App() {
             <a href="#/shop/filters">Filtres à eau</a>
             <a href="#/shop/cartridges">Cartouches</a>
             <a href="#/shop/dispensers">Fontaines</a>
+            <a href="#/shop/bottles">Bouteilles</a>
             <button onClick={() => section("difference")}>
               Pourquoi Filtra ?
             </button>
@@ -338,6 +336,7 @@ function App() {
                 }}
               >
                 <Search size={20} />
+                <span className="search-hint">Rechercher un produit...</span>
               </button>
               <button
                 className="bag-button"
@@ -378,6 +377,7 @@ function App() {
           />
         ) : route === "#/" ? (
           <Home
+            Card={ProductCard}
             add={add}
             finder={() => setDialog("finder")}
             section={section}
@@ -525,316 +525,6 @@ function App() {
           </div>
         </Modal>
       )}
-    </>
-  );
-}
-function Home({ add, finder, section }) {
-  const featured = ["tank-pro", "tank-pro-s", "koldair", "cartridge-pro"];
-  return (
-    <>
-      <section className="hero maroc-hero">
-        <div className="hero-copy">
-          <span className="eyebrow">
-            <span className="tiny-dot" /> L’EAU DU QUOTIDIEN, AUTREMENT.
-          </span>
-          <h1>
-            Une eau meilleure.
-            <br />
-            Une vie plus <span className="serif">simple.</span>
-          </h1>
-          <p>
-            Du premier verre du matin aux moments partagés.
-            <br />
-            Découvrez les solutions de filtration qui trouvent
-            <br className="desktop-break" /> leur place chez vous.
-          </p>
-          <div className="hero-buttons">
-            <a href="#/shop/filters" className="button">
-              Trouver mon filtre <ArrowUpRight size={18} />
-            </a>
-            <button className="hero-text" onClick={finder}>
-              Aidez-moi à choisir <ArrowRight size={17} />
-            </button>
-          </div>
-          <div className="hero-note">
-            <span className="note-icon">
-              <MapPin size={20} />
-            </span>
-            <span>
-              Pensé pour votre quotidien au Maroc.
-              <br />
-              <b>Livraison offerte. Paiement à la réception.</b>
-            </span>
-          </div>
-        </div>
-        <div className="hero-visual real-hero">
-          <div className="hero-orbit" />
-          <div className="hero-orbit orbit-two" />
-          <div className="visual-top">
-            <span>LE COMPACT QUI CHANGE VOTRE QUOTIDIEN.</span>
-            <Droplets size={23} />
-          </div>
-          <span className="hero-water-word" aria-hidden="true">
-            pure.
-          </span>
-          <Photo product={products[0]} fetchPriority="high" />
-          <div className="floating-label">
-            <span className="tiny-dot" /> 6 fonctions. Un seul filtre.
-          </div>
-          <div className="hero-product-caption">
-            <div>
-              <span>TANK PRO · NOIR</span>
-              <p>
-                Petit format.
-                <br />
-                Nouvelle habitude.
-              </p>
-            </div>
-            <a className="hero-price-link" href="#/product/tank-pro">
-              <span>
-                <del>950 DH</del>
-                <b>749 DH</b>
-              </span>
-              <ArrowUpRight size={25} />
-            </a>
-          </div>
-          <div className="vertical-label">LA SIMPLICITÉ A DU BON.</div>
-        </div>
-      </section>
-      <div className="benefit-strip">
-        <span>
-          <Truck /> Livraison offerte au Maroc
-        </span>
-        <span>
-          <Banknote /> Paiement à la livraison
-        </span>
-        <span>
-          <Package /> Vérification à réception
-        </span>
-        <span>
-          <RefreshCw /> Cartouches de remplacement
-        </span>
-      </div>
-      <section className="category-section section">
-        <div className="section-heading">
-          <div>
-            <span className="eyebrow">UNE PLACE POUR CHAQUE BESOIN</span>
-            <h2>
-              Votre eau. Votre <span className="serif">quotidien.</span>
-            </h2>
-          </div>
-          <a href="#/shop/all" className="round-link">
-            Toute la boutique <ArrowUpRight size={17} />
-          </a>
-        </div>
-        <div className="category-grid">
-          {categories.slice(1).map((c, i) => (
-            <a
-              href={`#/shop/${c.id}`}
-              className={`category-tile tile-${i}`}
-              key={c.id}
-            >
-              <div>
-                <span>0{i + 1}</span>
-                <ArrowUpRight size={18} />
-              </div>
-              <img src={asset(c.image)} alt="" loading="lazy" />
-              <h3>{c.name}</h3>
-              <p>{c.description}</p>
-            </a>
-          ))}
-        </div>
-      </section>
-      <section className="collection section" id="shop">
-        <div className="section-heading">
-          <div>
-            <span className="eyebrow">LES ESSENTIELS FILTRA</span>
-            <h2>
-              Bien choisir. <span className="serif">Mieux profiter.</span>
-            </h2>
-          </div>
-          <p>
-            Des produits utiles, des choix simples.
-            <br />
-            Découvrez notre sélection pour votre maison.
-          </p>
-          <a href="#/shop/all" className="round-link">
-            Voir la sélection <ArrowUpRight size={17} />
-          </a>
-        </div>
-        <div className="product-grid maroc-grid">
-          {featured.map((id) => (
-            <ProductCard
-              key={id}
-              product={products.find((p) => p.id === id)}
-              add={add}
-            />
-          ))}
-        </div>
-      </section>
-      <section className="guide-banner">
-        <div className="guide-symbol">
-          <SlidersHorizontal size={34} />
-        </div>
-        <div>
-          <span className="eyebrow">ON VOUS SIMPLIFIE LE CHOIX</span>
-          <h2>
-            Le bon produit commence par{" "}
-            <span className="serif">votre besoin.</span>
-          </h2>
-          <p>
-            Un premier filtre ? Une cartouche à remplacer ? Laissez-vous guider.
-          </p>
-        </div>
-        <button className="button" onClick={finder}>
-          Trouver ma solution <ArrowUpRight size={18} />
-        </button>
-      </section>
-      <section className="difference" id="difference">
-        <div className="difference-intro">
-          <span className="eyebrow">PLUS PROCHE DE VOTRE QUOTIDIEN</span>
-          <h2>
-            Une bonne eau.
-            <br />
-            Et l’esprit plus <span className="serif">léger.</span>
-          </h2>
-          <p>
-            Chez Filtra Maroc, on vous aide à faire de la filtration un geste
-            simple, du choix de votre appareil à son entretien.
-          </p>
-          <button className="light-link" onClick={() => section("faq")}>
-            Vos questions, nos réponses <ArrowUpRight size={18} />
-          </button>
-          <div className="water-mark">
-            <Waves />
-          </div>
-        </div>
-        <div className="difference-list">
-          {[
-            [
-              Truck,
-              "01",
-              "On vous livre, sans frais.",
-              "Toutes les villes du Maroc, sans minimum de commande. Le prix affiché est le prix TTC à régler.",
-            ],
-            [
-              Banknote,
-              "02",
-              "Vous payez à la réception.",
-              "Votre commande est confirmée par téléphone. Vous pouvez vérifier le produit devant le livreur avant de payer.",
-            ],
-            [
-              RefreshCw,
-              "03",
-              "Votre filtre a une suite.",
-              "Retrouvez les cartouches correspondant à votre appareil et gardez une routine d’entretien simple.",
-            ],
-          ].map(([Icon, n, t, d]) => (
-            <div className="difference-row" key={n}>
-              <Icon size={26} />
-              <div>
-                <h3>{t}</h3>
-                <p>{d}</p>
-              </div>
-              <span>{n}</span>
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="refill-section section">
-        <div className="refill-art">
-          <span className="eyebrow">LE PETIT GESTE QUI FAIT DURER.</span>
-          <Photo product={products.find((p) => p.id === "cartridge-pro")} />
-          <div className="refill-bubble">
-            <RefreshCw size={21} />
-            <span>
-              Une cartouche neuve.
-              <br />
-              Une routine qui continue.
-            </span>
-          </div>
-        </div>
-        <div className="story-copy">
-          <span className="eyebrow">PRENEZ SOIN DE VOTRE FILTRE</span>
-          <h2>
-            Le bon réflexe ?<br />
-            Penser au <span className="serif">prochain.</span>
-          </h2>
-          <p>
-            Votre filtre vous accompagne chaque jour. Sa cartouche mérite aussi
-            votre attention.
-          </p>
-          <p>
-            TANK Pro, TANK Power ou Pro RO : trouvez la référence adaptée à
-            votre système, sans vous perdre dans les détails.
-          </p>
-          <a href="#/shop/cartridges" className="text-link">
-            Trouver ma cartouche <ArrowUpRight size={18} />
-          </a>
-        </div>
-      </section>
-      <section className="faq section" id="faq">
-        <div>
-          <span className="eyebrow">TOUT SIMPLEMENT, ON VOUS RÉPOND</span>
-          <h2>
-            Les bonnes questions.
-            <br />
-            Des réponses <span className="serif">claires.</span>
-          </h2>
-          <p>Pour choisir et commander sereinement.</p>
-          <a
-            className="text-link"
-            href={`${storeUrl}contactez-nous`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Contacter Filtra Maroc <ArrowUpRight size={17} />
-          </a>
-        </div>
-        <div>
-          {[
-            [
-              "Quel filtre choisir pour ma maison ?",
-              "Commencez par votre besoin et votre installation. Le TANK Pro réunit six fonctions dans un format compact ; le Pro S en propose quatre et le TANK Power un système en trois étapes. Notre guide vous aide à explorer les modèles. Pour une eau particulière, demandez conseil avant de choisir.",
-            ],
-            [
-              "La livraison est-elle vraiment offerte ?",
-              "Oui. La politique de Filtra Maroc prévoit la livraison gratuite sur tous les produits, sans minimum de commande et partout au Maroc.",
-            ],
-            [
-              "Comment se passe le paiement ?",
-              "Le paiement à la livraison vous permet de régler en espèces à la réception. L’équipe vous appelle d’abord pour confirmer votre commande et votre adresse. Aucun numéro de carte n’est demandé dans ce parcours.",
-            ],
-            [
-              "Quand vais-je recevoir ma commande ?",
-              "Après confirmation téléphonique : 24 à 48 heures ouvrables dans les grandes villes, 48 à 72 heures dans les autres villes et jusqu’à 5 jours ouvrables dans les zones éloignées. Les dimanches et jours fériés ne sont pas inclus.",
-            ],
-            [
-              "Quelle cartouche est compatible avec mon filtre ?",
-              "Vérifiez le nom et la référence de votre filtre. La cartouche TANK Pro six fonctions correspond au TANK Pro ; les cartouches PF sont dédiées à la gamme Pro RO. Le guide permet de retrouver ces familles sans les confondre.",
-            ],
-          ].map(([q, a]) => (
-            <details key={q}>
-              <summary>
-                {q}
-                <Plus size={18} />
-              </summary>
-              <p>{a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-      <section className="closing">
-        <span className="eyebrow">UN PETIT CHANGEMENT, CHAQUE JOUR</span>
-        <h2>
-          Et si le mieux commençait par{" "}
-          <span className="serif">votre eau ?</span>
-        </h2>
-        <a href="#/shop/all" className="button">
-          Découvrir Filtra <ArrowUpRight size={18} />
-        </a>
-        <Droplets className="closing-drop" />
-      </section>
     </>
   );
 }
@@ -1546,106 +1236,6 @@ function Checkout({ cart, total, update, clear }) {
         </p>
       </aside>
     </section>
-  );
-}
-function Footer({ section, notify }) {
-  return (
-    <footer>
-      <div className="footer-top">
-        <div>
-          <Logo />
-          <h2>
-            Une eau meilleure.
-            <br />
-            Tout <span className="serif">simplement.</span>
-          </h2>
-          <span className="footer-location">
-            <MapPin size={14} /> À vos côtés, partout au Maroc.
-          </span>
-        </div>
-        <div className="footer-links">
-          <div>
-            <b>La boutique</b>
-            {categories.slice(1).map((c) => (
-              <a key={c.id} href={`#/shop/${c.id}`}>
-                {c.name}
-              </a>
-            ))}
-          </div>
-          <div>
-            <b>Un peu de clarté</b>
-            <button onClick={() => section("faq")}>Questions fréquentes</button>
-            <a
-              href={`${storeUrl}content/1-livraison`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Livraison & paiement
-            </a>
-            <a
-              href={`${storeUrl}contactez-nous`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Nous contacter
-            </a>
-            <a href={`${storeUrl}mon-compte`} target="_blank" rel="noreferrer">
-              Mon compte sur filtra.ma
-            </a>
-          </div>
-          <div className="newsletter">
-            <b>Gardons le fil.</b>
-            <p>
-              Les nouveautés et conseils Filtra,
-              <br />
-              une goutte à la fois.
-            </p>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                notify(
-                  "Merci ! Inscription de démonstration, non enregistrée.",
-                );
-                e.target.reset();
-              }}
-            >
-              <input
-                aria-label="Votre adresse e-mail pour la newsletter"
-                type="email"
-                placeholder="Votre adresse e-mail"
-                required
-              />
-              <button aria-label="S’inscrire à la newsletter">
-                <ArrowRight size={20} />
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Filtra Maroc.</span>
-        <span>
-          <a
-            href={`${storeUrl}content/2-mentions-legales`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Mentions légales
-          </a>{" "}
-          ·{" "}
-          <a
-            href={`${storeUrl}content/3-conditions-generales-de-vente`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            CGV
-          </a>
-        </span>
-        <span>
-          Français · MAD (DH) · Aperçu du thème <Droplets size={14} />
-        </span>
-      </div>
-    </footer>
   );
 }
 createRoot(document.getElementById("root")).render(<App />);

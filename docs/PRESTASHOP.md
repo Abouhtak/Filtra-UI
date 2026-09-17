@@ -51,19 +51,21 @@ La maquette ne transmet aucune commande. La validation, les consentements et les
 
 | Élément          | Valeur                       |
 | ---------------- | ---------------------------- |
-| Encre / boutons  | `#153f43`                    |
-| Aqua             | `#d9ece6`                    |
-| Sauge            | `#e8eddd`                    |
-| Fond principal   | `#fffefa`                    |
-| Texte secondaire | `#60766b`                    |
-| Police UI        | DM Sans                      |
-| Titres           | Manrope                      |
-| Accent italique  | Instrument Serif             |
-| Rayon courant    | 6–8 px                       |
+| Bleu / boutons   | `#2464ee`                    |
+| Marine           | `#142744`                    |
+| Bleu clair       | `#edf4ff`                    |
+| Accent citron    | `#dbf891`                    |
+| Fond principal   | `#ffffff`                    |
+| Texte secondaire | `#64738a`                    |
+| Police UI        | Inter                        |
+| Titres           | Plus Jakarta Sans            |
+| Rayon courant    | 6–14 px                      |
 | Grille produit   | 4 colonnes desktop, 2 mobile |
 | Seuil mobile     | 760 px                       |
 
-`src/maroc.css` contient les adaptations et variables `--filtra-*`; `src/styles.css` contient la base. Porter les sélecteurs utiles et les encapsuler pour éviter les conflits avec les modules. La marque affichée est une proposition typographique ; le logo existant est conservé dans `public/products/logo.webp`.
+`src/design.css` constitue le système visuel autonome : couleurs, composants, pages et adaptations responsive. Les anciennes feuilles de style ont été retirées. `src/Home.jsx` contient la nouvelle composition de l’accueil et du pied de page ; `src/App.jsx` regroupe les parcours commerciaux. Porter les sélecteurs utiles et les encapsuler pour éviter les conflits avec les modules. Le logo existant est affiché depuis `public/products/logo.webp`.
+
+L’accueil associe un hero produit bleu cobalt, quatre entrées de catégories, une sélection filtrable, un guide de choix, des blocs entretien et mobilité et une FAQ. Le panier et la commande reprennent la même hiérarchie visuelle. Les sélections interactives de l’accueil doivent être reliées aux catégories et produits réels lors du portage.
 
 ## Validation sur préproduction
 
